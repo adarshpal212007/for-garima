@@ -1,29 +1,41 @@
-.final-section {
- text-align:center;
- margin-top:80px;
+/* FINAL SECTION */
+.final-section{
+  text-align:center;
+  margin-top:40px;
+  z-index:10;
 }
 
-.crate {
- font-size:80px;
- cursor:pointer;
- transition:0.3s;
+/* CRATE */
+.crate{
+  font-size:70px;
+  cursor:pointer;
+  margin:20px auto;
+  transition:0.3s;
 }
 
-.crate:hover {
- transform:scale(1.2) rotate(5deg);
+.crate:hover{
+  transform:scale(1.15) rotate(5deg);
 }
 
-.find-btn {
- margin-top:20px;
- padding:10px 20px;
- border:none;
- background:#ff4d6d;
- color:white;
- border-radius:20px;
- cursor:pointer;
+/* BUTTON */
+.find-btn{
+  background:#ff4d6d;
+  color:white;
+  border:none;
+  padding:12px 22px;
+  border-radius:25px;
+  font-size:1rem;
+  cursor:pointer;
+  margin-top:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+  transition:0.2s;
 }
 
-/* POPUP FIX */
+.find-btn:active{
+  transform:scale(0.95);
+}
+
+/* POPUP */
 .popup{
   position:fixed;
   top:0;
@@ -52,38 +64,4 @@
 @keyframes pop{
   from{transform:scale(0.8);opacity:0}
   to{transform:scale(1);opacity:1}
-}
-
-/* FINAL SECTION FIX */
-.final-section{
-  position:fixed;
-  bottom:40px;
-  width:100%;
-  text-align:center;
-  z-index:10;
-}
-
-/* CRATE FIX */
-.crate{
-  font-size:60px;
-  cursor:pointer;
-  margin:15px auto;
-  transition:0.3s;
-}
-
-.crate:hover{
-  transform:scale(1.1);
-}
-
-/* BUTTON FIX */
-.find-btn{
-  background:#ff4d6d;
-  color:white;
-  border:none;
-  padding:12px 20px;
-  border-radius:20px;
-  font-size:1rem;
-  cursor:pointer;
-  margin-top:10px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
