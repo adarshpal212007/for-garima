@@ -2,185 +2,157 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>for garima</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Dancing+Script&display=swap" rel="stylesheet">
+<title>Secret Story</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-
 body{
- background:linear-gradient(135deg,#020617,#1e1b4b);
- color:white;
- font-family:Poppins;
- overflow:hidden;
+ margin:0;
+ font-family:sans-serif;
+ background:#111;
+ color:#fff;
+ text-align:center;
+ overflow:auto;
 }
 
-/* calculator */
-.calc{
- height:100vh;
- display:flex;
- flex-direction:column;
- align-items:center;
- justify-content:center
+/* ---------------- CALCULATOR ---------------- */
+#calc{
+ margin-top:100px;
 }
 
-.display{
- width:240px;height:60px;
- background:#0f172a;
- border-radius:15px;
- margin-bottom:15px;
- display:flex;
- align-items:center;
- justify-content:flex-end;
- padding:10px;
- font-size:1.5rem;
-}
-
-.buttons{
- display:grid;
- grid-template-columns:repeat(4,60px);
- gap:10px
+#screen{
+ height:50px;
+ width:200px;
+ background:#222;
+ margin:10px auto;
+ line-height:50px;
+ font-size:20px;
+ border-radius:10px;
 }
 
 button{
- height:60px;
+ padding:15px;
+ margin:5px;
+ font-size:18px;
  border:none;
- border-radius:15px;
- background:#1e293b;
- color:white;
- font-size:1.2rem;
+ border-radius:10px;
  cursor:pointer;
 }
 
-.hidden{display:none}
+/* ---------------- STORY ---------------- */
+.hidden{ display:none; }
 
-/* slides */
 .slide{
  display:none;
  height:100vh;
- align-items:center;
  justify-content:center;
- flex-direction:column;
- text-align:center;
- padding:20px;
+ align-items:center;
+ font-size:24px;
 }
 
-.active{display:flex}
-
-.text{
- font-size:2rem;
- font-family:'Dancing Script';
+.active{
+ display:flex;
 }
 
-/* progress */
-.progress{
+/* progress bar */
+#progress{
  position:fixed;
  top:0;
  left:0;
- height:4px;
- background:#ff4d6d;
- width:0%
+ width:100%;
+ height:5px;
+ background:#333;
 }
 
-/* final section */
-.final-section{
- text-align:center;
- margin-top:20px;
+#bar{
+ height:100%;
+ width:0%;
+ background:#00ffcc;
 }
 
+/* ---------------- CRATE ---------------- */
 .crate{
- font-size:80px;
+ width:120px;
+ height:120px;
+ background:brown;
+ margin:auto;
+ margin-top:20px;
+ display:flex;
+ justify-content:center;
+ align-items:center;
  cursor:pointer;
- margin:15px;
+ border-radius:10px;
 }
 
-.find-btn{
- padding:10px 20px;
- background:#ff4d6d;
- border:none;
- border-radius:20px;
- color:white;
- cursor:pointer;
-}
-
-/* popup */
+/* ---------------- POPUP ---------------- */
 .popup{
  position:fixed;
  top:0;
  left:0;
  width:100%;
  height:100%;
- display:none;
  background:rgba(0,0,0,0.7);
+ display:none;
  justify-content:center;
  align-items:center;
- z-index:999;
 }
 
-.popup-content{
- background:white;
- color:black;
+.popup-box{
+ background:#222;
  padding:20px;
  border-radius:15px;
  max-width:300px;
- text-align:center;
 }
 </style>
 </head>
 
 <body>
 
-<!-- CALCULATOR -->
-<div class="calc" id="calc">
- <div class="display" id="screen"></div>
- <div class="buttons">
-  <button onclick="press(1)">1</button>
-  <button onclick="press(2)">2</button>
-  <button onclick="press(3)">3</button>
+<!-- ---------------- CALCULATOR ---------------- -->
+<div id="calc">
+ <h2>Enter Password 🔐</h2>
+ <div id="screen"></div>
+
+ <div>
+  <button onclick="press('1')">1</button>
+  <button onclick="press('2')">2</button>
+  <button onclick="press('3')">3</button><br>
+
+  <button onclick="press('4')">4</button>
+  <button onclick="press('5')">5</button>
+  <button onclick="press('6')">6</button><br>
+
+  <button onclick="press('7')">7</button>
+  <button onclick="press('8')">8</button>
+  <button onclick="press('9')">9</button><br>
+
   <button onclick="clearScr()">C</button>
-  <button onclick="press(4)">4</button>
-  <button onclick="press(5)">5</button>
-  <button onclick="press(6)">6</button>
-  <button onclick="backspace()">⌫</button>
-  <button onclick="check()">=</button>
+  <button onclick="press('0')">0</button>
+  <button onclick="check()">OK</button>
  </div>
 </div>
 
-<!-- STORY -->
+<!-- ---------------- STORY ---------------- -->
 <div id="story" class="hidden">
-<div class="progress" id="bar"></div>
 
-<div class="slide active"><div class="text">garima... ek sec rukiyega</div></div>
-<div class="slide"><div class="text">skip mat kariyega please</div></div>
-<div class="slide"><div class="text">aapko lagta hai na ki koi care nahi karta</div></div>
-<div class="slide"><div class="text">kabhi kabhi aisa feel hota hai</div></div>
-<div class="slide"><div class="text">but pura sach nahi hota</div></div>
-<div class="slide"><div class="text">main karta hu care</div></div>
-<div class="slide"><div class="text">aap zyada soch leti hain</div></div>
-<div class="slide"><div class="text">aur phir sad ho jaati hain</div></div>
-<div class="slide"><div class="text">aap important hain</div></div>
-<div class="slide"><div class="text">thodi annoying bhi hain 😅</div></div>
+ <div id="progress"><div id="bar"></div></div>
 
-<!-- FINAL SLIDE -->
-<div class="slide">
- <div class="text">at least ek banda to karta hi hai 🙂</div>
+ <div class="slide active">hey… 👀</div>
+ <div class="slide">i made something for you 💛</div>
+ <div class="slide">tap to continue…</div>
 
- <div class="final-section">
-  <h2>wait… ek last cheez 👀</h2>
-  <p>there is a surprise for you</p>
-
-  <div class="crate" onclick="openCrate(event)">📦</div>
-  <button class="find-btn" onclick="findKey(event)">Find Key 🔑</button>
+ <!-- SINGLE CRATE (FIXED DOUBLE ISSUE) -->
+ <div class="slide">
+  <button onclick="findKey(event)">find key 🔑</button>
+  <div class="crate" onclick="openCrate(event)">🎁</div>
  </div>
-</div>
+
+ <div class="slide">hope you liked it :)</div>
 
 </div>
 
-<!-- POPUP -->
+<!-- ---------------- POPUP ---------------- -->
 <div id="popup" class="popup">
-  <div class="popup-content" id="popup-text"></div>
+ <div class="popup-box" id="popup-text"></div>
 </div>
 
 <script>
@@ -188,75 +160,74 @@ let input="";
 const password="143";
 let hasKey=false;
 
-// calculator
+// ---------------- CALCULATOR ----------------
 function press(num){
  input+=num;
- screen.innerText=input;
+ document.getElementById("screen").innerText=input;
 }
 
 function clearScr(){
  input="";
- screen.innerText="";
-}
-
-function backspace(){
- input=input.slice(0,-1);
- screen.innerText=input;
+ document.getElementById("screen").innerText="";
 }
 
 function check(){
  if(input===password){
-  calc.style.display='none';
-  story.classList.remove('hidden');
+  document.getElementById("calc").style.display="none";
+  document.getElementById("story").classList.remove("hidden");
  } else {
   alert("wrong password 😅");
   clearScr();
  }
 }
 
-// slides
+// ---------------- SLIDES ----------------
 let current=0;
-const slides=document.querySelectorAll('.slide');
-const bar=document.getElementById('bar');
+const slides=document.querySelectorAll(".slide");
+const bar=document.getElementById("bar");
+const story=document.getElementById("story");
 
-document.body.addEventListener("click", function(e){
+document.body.addEventListener("click",function(e){
 
- if(e.target.closest(".crate") || 
-    e.target.closest(".find-btn") || 
+ // prevent slide change when clicking buttons, crate or popup
+ if(e.target.closest("button") || 
+    e.target.closest(".crate") || 
     e.target.closest(".popup")) return;
 
- if(story.classList.contains('hidden')) return;
+ if(story.classList.contains("hidden")) return;
+ if(current>=slides.length-1) return;
 
- if(current >= slides.length-1) return;
-
- slides[current].classList.remove('active');
+ slides[current].classList.remove("active");
  current++;
- slides[current].classList.add('active');
+ slides[current].classList.add("active");
 
  bar.style.width=(current/(slides.length-1))*100+"%";
 });
 
-// popup
+// ---------------- POPUP ----------------
 function showPopup(msg){
+ const popup=document.getElementById("popup");
+ const text=document.getElementById("popup-text");
+
+ text.innerHTML=msg;
  popup.style.display="flex";
- document.getElementById("popup-text").innerHTML=msg;
+
+ popup.onclick=()=>popup.style.display="none";
 }
 
-popup.onclick=()=>popup.style.display="none";
-
-// key
+// ---------------- FIND KEY ----------------
 function findKey(e){
  e.stopPropagation();
  hasKey=true;
 
  showPopup(`
- pehle ek choti si condition hai...<br><br>
+ pehle ek choti si condition hai... 👀<br><br>
  agar aap smile nahi kar rahe ho... toh ek baar smile kariyega 😊<br><br>
  <b>aapki smile hi iss crate ki key hai 💛</b>
  `);
 }
 
-// crate
+// ---------------- OPEN CRATE ----------------
 function openCrate(e){
  e.stopPropagation();
 
@@ -267,7 +238,7 @@ function openCrate(e){
   🎉 surpriseeee 🎉<br><br>
   ye aapke liye 🍰<br><br>
   virtual hai… but intention real hai :)<br><br>
-  aap important hain 💛
+  aap important ho 💛
   `);
 
   document.querySelector(".crate").style.display="none";
