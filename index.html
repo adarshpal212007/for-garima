@@ -4,40 +4,86 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>for garima</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Dancing+Script&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:linear-gradient(135deg,#020617,#1e1b4b);color:white;font-family:Poppins;overflow:hidden}
-
-.hidden{display:none}
+body{
+ background:linear-gradient(135deg,#020617,#1e1b4b);
+ color:white;
+ font-family:Poppins;
+ overflow:hidden;
+}
 
 /* calculator */
 .calc{
- height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center
+ height:100vh;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center
 }
+
 .display{
- width:240px;height:60px;background:#0f172a;border-radius:15px;margin-bottom:15px;display:flex;align-items:center;justify-content:flex-end;padding:10px;font-size:1.5rem;box-shadow:0 0 20px rgba(255,255,255,0.1)
+ width:240px;height:60px;
+ background:#0f172a;
+ border-radius:15px;
+ margin-bottom:15px;
+ display:flex;
+ align-items:center;
+ justify-content:flex-end;
+ padding:10px;
+ font-size:1.5rem;
+ box-shadow:0 0 20px rgba(255,255,255,0.1)
 }
+
 .buttons{
- display:grid;grid-template-columns:repeat(4,60px);gap:10px
+ display:grid;
+ grid-template-columns:repeat(4,60px);
+ gap:10px
 }
+
 button{
- height:60px;border:none;border-radius:15px;background:linear-gradient(145deg,#1e293b,#0f172a);color:white;font-size:1.2rem;box-shadow:0 5px 15px rgba(0,0,0,0.5);transition:0.2s
+ height:60px;
+ border:none;
+ border-radius:15px;
+ background:linear-gradient(145deg,#1e293b,#0f172a);
+ color:white;
+ font-size:1.2rem;
+ box-shadow:0 5px 15px rgba(0,0,0,0.5);
+ transition:0.2s;
+ cursor:pointer;
 }
 button:active{transform:scale(0.9)}
 
 /* story */
-.slide{display:none;height:100vh;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:20px;position:relative}
+.hidden{display:none}
+
+.slide{
+ display:none;
+ height:100vh;
+ align-items:center;
+ justify-content:center;
+ flex-direction:column;
+ text-align:center;
+ padding:20px;
+ position:relative
+}
+
 .active{display:flex}
 
 .text{
- font-size:1.9rem;
+ font-size:2rem;
  font-family:'Dancing Script';
  animation:fadeUp 0.8s ease;
 }
+
 .small{
- opacity:0.8;margin-top:10px;font-size:1.1rem
+ opacity:0.8;
+ margin-top:10px;
+ font-size:1.1rem
 }
 
 @keyframes fadeUp{
@@ -45,7 +91,7 @@ button:active{transform:scale(0.9)}
  to{opacity:1;transform:translateY(0)}
 }
 
-/* glow background */
+/* glow */
 .glow{
  position:absolute;
  width:250px;height:250px;
@@ -62,15 +108,82 @@ button:active{transform:scale(0.9)}
 
 .content{z-index:1}
 
-.progress{position:fixed;top:0;left:0;height:4px;background:linear-gradient(to right,#ff4d6d,#f97316);width:0%}
+.progress{
+ position:fixed;
+ top:0;left:0;
+ height:4px;
+ background:linear-gradient(to right,#ff4d6d,#f97316);
+ width:0%
+}
 
-.tap{position:fixed;bottom:20px;width:100%;text-align:center;opacity:0.6;font-size:0.9rem}
+.tap{
+ position:fixed;
+ bottom:20px;
+ width:100%;
+ text-align:center;
+ opacity:0.6;
+ font-size:0.9rem
+}
 
+/* FINAL SECTION */
+.final-section{
+ margin-top:30px;
+ text-align:center;
+}
+
+.crate{
+ font-size:80px;
+ cursor:pointer;
+ transition:0.3s;
+}
+
+.crate:hover{
+ transform:scale(1.2) rotate(5deg);
+}
+
+.find-btn{
+ margin-top:15px;
+ padding:10px 20px;
+ border:none;
+ background:#ff4d6d;
+ color:white;
+ border-radius:20px;
+ cursor:pointer;
+}
+
+/* popup */
+.popup{
+ position:fixed;
+ top:0;
+ left:0;
+ width:100%;
+ height:100%;
+ display:none;
+ background:rgba(0,0,0,0.7);
+ justify-content:center;
+ align-items:center;
+}
+
+.popup-content{
+ background:white;
+ color:black;
+ padding:20px;
+ border-radius:15px;
+ max-width:300px;
+ text-align:center;
+ animation:pop 0.4s ease;
+}
+
+@keyframes pop{
+ from{transform:scale(0)}
+ to{transform:scale(1)}
+}
 </style>
 </head>
-<body onclick="nextSlide()">
 
-<!-- calculator -->
+<body>
+
+<!-- CALCULATOR -->
 <div class="calc" id="calc">
  <div class="display" id="screen"></div>
  <div class="buttons">
@@ -85,14 +198,13 @@ button:active{transform:scale(0.9)}
  </div>
 </div>
 
-<!-- story -->
+<!-- STORY -->
 <div id="story" class="hidden">
 <div class="progress" id="bar"></div>
 
 <div class="slide active">
  <div class="glow"></div>
  <div class="content">
- <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_jcikwtux.json" background="transparent" style="width:220px"></lottie-player>
  <div class="text">garima... ek sec rukiyega</div>
  </div>
 </div>
@@ -107,7 +219,6 @@ button:active{transform:scale(0.9)}
 <div class="slide">
  <div class="glow"></div>
  <div class="content">
- <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_touohxv0.json" background="transparent" style="width:220px"></lottie-player>
  <div class="text">aapko lagta hai na ki koi care nahi karta</div>
  </div>
 </div>
@@ -137,8 +248,7 @@ button:active{transform:scale(0.9)}
 <div class="slide">
  <div class="glow"></div>
  <div class="content">
- <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_kkflmtur.json" background="transparent" style="width:220px"></lottie-player>
- <div class="text">aap bas thoda zyada soch leti hain</div>
+ <div class="text">aap thoda zyada soch leti hain</div>
  </div>
 </div>
 
@@ -159,54 +269,33 @@ button:active{transform:scale(0.9)}
 <div class="slide">
  <div class="glow"></div>
  <div class="content">
- <div class="text">aur haan...</div>
- </div>
-</div>
-
-<div class="slide">
- <div class="glow"></div>
- <div class="content">
  <div class="text">thodi si annoying bhi hain 😅</div>
  <div class="small">but achi wali</div>
  </div>
 </div>
 
+<!-- FINAL SLIDE -->
 <div class="slide">
  <div class="glow"></div>
  <div class="content">
- <div class="text">isliye aisa mat sochiye</div>
- </div>
-</div>
 
-<div class="slide">
- <div class="glow"></div>
- <div class="content">
- <div class="text">ki koi care nahi karta</div>
- </div>
-</div>
+  <div class="text">at least ek banda to karta hi hai 🙂</div>
 
-<div class="slide">
- <div class="glow"></div>
- <div class="content">
- <div class="text">at least ek banda to karta hi hai 🙂</div>
+  <div class="final-section">
+    <h2>wait… ek last cheez 👀</h2>
+    <p>there is a surprise for you</p>
+
+    <div class="crate" onclick="openCrate()">📦</div>
+    <button class="find-btn" onclick="findKey()">Find Key 🔑</button>
+  </div>
+
  </div>
 </div>
 
 <div class="tap">tap anywhere →</div>
 </div>
 
- <div class="final-section">
-  <h2>wait… ek last cheez 👀</h2>
-  <p>there is a surprise for you</p>
-
-  <div class="crate" onclick="openCrate()">
-    📦
-  </div>
-
-  <button class="find-btn" onclick="findKey()">Find Key 🔑</button>
-</div>
-
-<!-- Popup -->
+<!-- POPUP -->
 <div id="popup" class="popup">
   <div class="popup-content" id="popup-text"></div>
 </div>
@@ -220,14 +309,16 @@ function press(num){
  document.getElementById('screen').innerText=input;
 }
 
-function clearScr(){input="";document.getElementById('screen').innerText=""}
+function clearScr(){
+ input="";
+ document.getElementById('screen').innerText="";
+}
 
 function check(){
  if(input===password){
   document.getElementById('calc').style.display='none';
   document.getElementById('story').classList.remove('hidden');
- }
- else{
+ } else {
   alert("wrong password 😅 try again");
   clearScr();
  }
@@ -237,57 +328,56 @@ let current=0;
 const slides=document.querySelectorAll('.slide');
 const bar=document.getElementById('bar');
 
-function nextSlide(){
- if(document.getElementById('story').classList.contains('hidden')) return;
- slides[current].classList.remove('active');
- current=(current+1)%slides.length;
- slides[current].classList.add('active');
- updateBar();
-}
+document.body.addEventListener("click", function(e){
+ if(!e.target.closest(".crate") && !e.target.closest(".find-btn")){
+  if(document.getElementById('story').classList.contains('hidden')) return;
+  slides[current].classList.remove('active');
+  current=(current+1)%slides.length;
+  slides[current].classList.add('active');
+  updateBar();
+ }
+});
 
 function updateBar(){
  let progress=(current/(slides.length-1))*100;
  bar.style.width=progress+'%';
 }
- let hasKey = false;
 
-function findKey() {
-  const popup = document.getElementById("popup");
-  const text = document.getElementById("popup-text");
+/* CRATE LOGIC */
+let hasKey=false;
 
-  text.innerHTML = `
-  pehle ek choti si condition hai...<br><br>
-  agar aap smile nahi kar rahe ho na... toh ek baar smile kariyega 😊<br><br>
-  kyunki sach me...<br>
-  <b>aapki smile hi iss crate ki key hai 💛</b><br><br>
-  pata nahi aap realise karte ho ya nahi...<br>
-  but jab aap smile karte ho na... sab thoda better lagta hai :)
-  `;
+function findKey(){
+ const popup=document.getElementById("popup");
+ const text=document.getElementById("popup-text");
 
-  popup.style.display = "flex";
-  hasKey = true;
+ text.innerHTML=`
+ pehle ek choti si condition hai...<br><br>
+ agar aap smile nahi kar rahe ho... toh ek baar smile kariyega 😊<br><br>
+ <b>aapki smile hi iss crate ki key hai 💛</b>
+ `;
 
-  popup.onclick = () => popup.style.display = "none";
+ popup.style.display="flex";
+ hasKey=true;
+
+ popup.onclick=()=>popup.style.display="none";
 }
 
-function openCrate() {
-  const popup = document.getElementById("popup");
-  const text = document.getElementById("popup-text");
+function openCrate(){
+ const popup=document.getElementById("popup");
+ const text=document.getElementById("popup-text");
 
-  if (!hasKey) {
-    text.innerHTML = "arey… pehle key toh dhundhiye 🥺";
-  } else {
-    text.innerHTML = `
-    🎉 surpriseeee 🎉<br><br>
-    ye aapke liye 🍰<br><br>
-    virtual hai… but intention real hai :)<br><br>
-    and haan…<br>
-    aap important hain 💛
-    `;
-  }
+ if(!hasKey){
+  text.innerHTML="arey… pehle key toh dhundhiye 🥺";
+ } else {
+  text.innerHTML=`
+ 🎉 surpriseeee 🎉<br><br>
+ ye aapke liye 🍰<br><br>
+ virtual hai… but intention real hai :)
+ `;
+ }
 
-  popup.style.display = "flex";
-  popup.onclick = () => popup.style.display = "none";
+ popup.style.display="flex";
+ popup.onclick=()=>popup.style.display="none";
 }
 </script>
 
