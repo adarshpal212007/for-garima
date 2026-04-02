@@ -3,7 +3,7 @@ let input="";
 const password="143";
 let hasKey=false;
 
-// ---------------- CALCULATOR ----------------
+// calculator
 function press(num){
  input+=num;
  document.getElementById("screen").innerText=input;
@@ -29,24 +29,28 @@ function check(){
  }
 }
 
-// ---------------- SLIDES ----------------
+// slides
 let current=0;
 const slides=document.querySelectorAll('.slide');
 const bar=document.getElementById('bar');
-const story=document.getElementById("story");
 
-document.body.addEventListener("click", function(e){
+// 🔥 FIXED CLICK HANDLING
+document.addEventListener("click", function(e){
 
- // ❌ block only popup clicks
- if(e.target.closest(".popup")) return;
+ // ❌ STOP slide change when clicking interactive elements
+ if(
+   e.target.closest(".crate") ||
+   e.target.closest(".find-btn") ||
+   e.target.closest(".popup") ||
+   e.target.closest(".buttons")   // 👈 IMPORTANT (calculator fix)
+ ){
+   return;
+ }
 
- // ❌ block crate & button clicks
- if(e.target.closest(".crate") || e.target.closest(".find-btn")) return;
+ const story=document.getElementById("story");
 
- // ❌ don't slide before unlock
  if(story.classList.contains('hidden')) return;
 
- // ❌ stop at last slide
  if(current >= slides.length-1) return;
 
  slides[current].classList.remove('active');
@@ -56,20 +60,22 @@ document.body.addEventListener("click", function(e){
  bar.style.width=(current/(slides.length-1))*100+"%";
 });
 
-// ---------------- POPUP ----------------
+// popup
 function showPopup(msg){
  const popup=document.getElementById("popup");
- const text=document.getElementById("popup-text");
-
- text.innerHTML=msg;
+ document.getElementById("popup-text").innerHTML=msg;
  popup.style.display="flex";
-
- popup.onclick=()=>popup.style.display="none";
 }
 
-// ---------------- FIND KEY ----------------
+// close popup
+document.getElementById("popup").onclick=function(){
+ this.style.display="none";
+};
+
+// key
 function findKey(e){
  e.stopPropagation();
+
  hasKey=true;
 
  showPopup(`
@@ -79,7 +85,7 @@ function findKey(e){
  `);
 }
 
-// ---------------- OPEN CRATE ----------------
+// crate
 function openCrate(e){
  e.stopPropagation();
 
@@ -93,6 +99,7 @@ function openCrate(e){
   aap important hain 💛
   `);
 
+  // hide crate after opening
   document.querySelector(".crate").style.display="none";
  }
 }
