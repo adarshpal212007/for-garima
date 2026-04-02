@@ -1,25 +1,27 @@
 <script>
+document.addEventListener("DOMContentLoaded", () => {
+
 let input = "";
 const password = "143";
 let hasKey = false;
 
 // ---------------- CALCULATOR ----------------
-function press(num){
+window.press = function(num){
   input += num;
   document.getElementById('screen').innerText = input;
 }
 
-function clearScr(){
+window.clearScr = function(){
   input = "";
   document.getElementById('screen').innerText = "";
 }
 
-function backspace(){
+window.backspace = function(){
   input = input.slice(0, -1);
   document.getElementById('screen').innerText = input;
 }
 
-function check(){
+window.check = function(){
   if(input === password){
     document.getElementById('calc').style.display = 'none';
     document.getElementById('story').classList.remove('hidden');
@@ -33,33 +35,23 @@ function check(){
 let current = 0;
 const slides = document.querySelectorAll('.slide');
 const bar = document.getElementById('bar');
-const story = document.getElementById('story');
 
-// 👉 global click for slide change (FIXED)
-document.body.addEventListener("click", function(e){
+window.nextSlide = function(e){
+  if(e) e.stopPropagation();
 
-  // ❌ ignore popup clicks
-  if(e.target.closest(".popup")) return;
+  if(document.getElementById('story').classList.contains('hidden')) return;
 
-  // ❌ ignore crate & button clicks
-  if(e.target.closest(".crate") || e.target.closest(".find-btn")) return;
-
-  // ❌ if story not started
-  if(story.classList.contains('hidden')) return;
-
-  // ❌ stop at last slide
   if(current >= slides.length - 1) return;
 
-  // ✅ move slide
   slides[current].classList.remove('active');
   current++;
   slides[current].classList.add('active');
 
   updateBar();
-});
+}
 
 function updateBar(){
-  let progress = (current/(slides.length-1)) * 100;
+  let progress = (current / (slides.length - 1)) * 100;
   bar.style.width = progress + '%';
 }
 
@@ -71,16 +63,11 @@ function showPopup(message){
   text.innerHTML = message;
   popup.style.display = "flex";
 
-  // close popup on outside click
-  popup.onclick = function(e){
-    if(e.target.id === "popup"){
-      popup.style.display = "none";
-    }
-  };
+  popup.onclick = () => popup.style.display = "none";
 }
 
 // ---------------- FIND KEY ----------------
-function findKey(e){
+window.findKey = function(e){
   e.stopPropagation();
 
   hasKey = true;
@@ -94,10 +81,8 @@ function findKey(e){
 }
 
 // ---------------- OPEN CRATE ----------------
-function openCrate(e){
+window.openCrate = function(e){
   e.stopPropagation();
-
-  const crate = document.querySelector(".crate");
 
   if(!hasKey){
     showPopup("arey… pehle key toh dhundhiye 🥺");
@@ -109,8 +94,10 @@ function openCrate(e){
       aap important ho 💛
     `);
 
-    // hide crate after opening
-    if(crate) crate.style.display = "none";
+    // remove ALL crates (fix double crate bug)
+    document.querySelectorAll(".crate").forEach(c => c.remove());
   }
 }
+
+});
 </script>
