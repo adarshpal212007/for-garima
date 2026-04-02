@@ -368,22 +368,29 @@ function findKey(){
  popup.onclick=()=>popup.style.display="none";
 }
 
-function openCrate(){
- const popup=document.getElementById("popup");
- const text=document.getElementById("popup-text");
+function openCrate(e) {
+  if(e) e.stopPropagation();
 
- if(!hasKey){
-  text.innerHTML="arey… pehle key toh dhundhiye 🥺";
- } else {
-  text.innerHTML=`
- 🎉 surpriseeee 🎉<br><br>
- ye aapke liye 🍰<br><br>
- virtual hai… but intention real hai :)
- `;
- }
+  const popup = document.getElementById("popup");
+  const text = document.getElementById("popup-text");
+  const crate = document.querySelector(".crate");
 
- popup.style.display="flex";
- popup.onclick=()=>popup.style.display="none";
+  if (!hasKey) {
+    text.innerHTML = "arey… pehle key toh dhundhiye 🥺";
+  } else {
+    text.innerHTML = `
+    🎉 surpriseeee 🎉<br><br>
+    ye aapke liye 🍰<br><br>
+    virtual hai… but intention real hai :)<br><br>
+    and haan…<br>
+    aap important hain 💛
+    `;
+
+    // 👉 hide crate after opening
+    crate.style.display = "none";
+  }
+
+  popup.style.display = "flex";
 }
 </script>
 
