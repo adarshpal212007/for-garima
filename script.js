@@ -1,103 +1,99 @@
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-
-let input = "";
-const password = "143";
-let hasKey = false;
+let input="";
+const password="143";
+let hasKey=false;
 
 // ---------------- CALCULATOR ----------------
-window.press = function(num){
-  input += num;
-  document.getElementById('screen').innerText = input;
+function press(num){
+ input+=num;
+ document.getElementById("screen").innerText=input;
 }
 
-window.clearScr = function(){
-  input = "";
-  document.getElementById('screen').innerText = "";
+function clearScr(){
+ input="";
+ document.getElementById("screen").innerText="";
 }
 
-window.backspace = function(){
-  input = input.slice(0, -1);
-  document.getElementById('screen').innerText = input;
+function backspace(){
+ input=input.slice(0,-1);
+ document.getElementById("screen").innerText=input;
 }
 
-window.check = function(){
-  if(input === password){
-    document.getElementById('calc').style.display = 'none';
-    document.getElementById('story').classList.remove('hidden');
-  } else {
-    alert("wrong password 😅 try again");
-    clearScr();
-  }
+function check(){
+ if(input===password){
+  document.getElementById("calc").style.display='none';
+  document.getElementById("story").classList.remove('hidden');
+ } else {
+  alert("wrong password 😅");
+  clearScr();
+ }
 }
 
 // ---------------- SLIDES ----------------
-let current = 0;
-const slides = document.querySelectorAll('.slide');
-const bar = document.getElementById('bar');
+let current=0;
+const slides=document.querySelectorAll('.slide');
+const bar=document.getElementById('bar');
+const story=document.getElementById("story");
 
-window.nextSlide = function(e){
-  if(e) e.stopPropagation();
+document.body.addEventListener("click", function(e){
 
-  if(document.getElementById('story').classList.contains('hidden')) return;
+ // ❌ block only popup clicks
+ if(e.target.closest(".popup")) return;
 
-  if(current >= slides.length - 1) return;
+ // ❌ block crate & button clicks
+ if(e.target.closest(".crate") || e.target.closest(".find-btn")) return;
 
-  slides[current].classList.remove('active');
-  current++;
-  slides[current].classList.add('active');
+ // ❌ don't slide before unlock
+ if(story.classList.contains('hidden')) return;
 
-  updateBar();
-}
+ // ❌ stop at last slide
+ if(current >= slides.length-1) return;
 
-function updateBar(){
-  let progress = (current / (slides.length - 1)) * 100;
-  bar.style.width = progress + '%';
-}
+ slides[current].classList.remove('active');
+ current++;
+ slides[current].classList.add('active');
+
+ bar.style.width=(current/(slides.length-1))*100+"%";
+});
 
 // ---------------- POPUP ----------------
-function showPopup(message){
-  const popup = document.getElementById("popup");
-  const text = document.getElementById("popup-text");
+function showPopup(msg){
+ const popup=document.getElementById("popup");
+ const text=document.getElementById("popup-text");
 
-  text.innerHTML = message;
-  popup.style.display = "flex";
+ text.innerHTML=msg;
+ popup.style.display="flex";
 
-  popup.onclick = () => popup.style.display = "none";
+ popup.onclick=()=>popup.style.display="none";
 }
 
 // ---------------- FIND KEY ----------------
-window.findKey = function(e){
-  e.stopPropagation();
+function findKey(e){
+ e.stopPropagation();
+ hasKey=true;
 
-  hasKey = true;
-
-  showPopup(`
-    pehle ek choti si condition hai... 👀<br><br>
-    agar aap smile nahi kar rahe ho... toh ek baar smile kariyega 😊<br><br>
-    <b>aapki smile hi iss crate ki key hai 💛</b><br><br>
-    jab aap smile karte ho na... sab better lagta hai :)
-  `);
+ showPopup(`
+ pehle ek choti si condition hai...<br><br>
+ agar aap smile nahi kar rahe ho... toh ek baar smile kariyega 😊<br><br>
+ <b>aapki smile hi iss crate ki key hai 💛</b>
+ `);
 }
 
 // ---------------- OPEN CRATE ----------------
-window.openCrate = function(e){
-  e.stopPropagation();
+function openCrate(e){
+ e.stopPropagation();
 
-  if(!hasKey){
-    showPopup("arey… pehle key toh dhundhiye 🥺");
-  } else {
-    showPopup(`
-      🎉 surpriseeeee 🎉<br><br>
-      ye aapke liye 🍰<br><br>
-      virtual hai… but intention real hai :)<br><br>
-      aap important ho 💛
-    `);
+ if(!hasKey){
+  showPopup("arey… pehle key toh dhundhiye 🥺");
+ } else {
+  showPopup(`
+  🎉 surpriseeee 🎉<br><br>
+  ye aapke liye 🍰<br><br>
+  virtual hai… but intention real hai :)<br><br>
+  aap important hain 💛
+  `);
 
-    // remove ALL crates (fix double crate bug)
-    document.querySelectorAll(".crate").forEach(c => c.remove());
-  }
+  document.querySelector(".crate").style.display="none";
+ }
 }
-
-});
 </script>
