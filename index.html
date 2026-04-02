@@ -2,157 +2,214 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Secret Story</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>for garima</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Dancing+Script&display=swap" rel="stylesheet">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box}
+
 body{
- margin:0;
- font-family:sans-serif;
- background:#111;
- color:#fff;
- text-align:center;
- overflow:auto;
+ background:linear-gradient(135deg,#020617,#1e1b4b);
+ color:white;
+ font-family:Poppins;
+ overflow:hidden;
 }
 
-/* ---------------- CALCULATOR ---------------- */
-#calc{
- margin-top:100px;
+/* calculator */
+.calc{
+ height:100vh;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
 }
 
-#screen{
- height:50px;
- width:200px;
- background:#222;
- margin:10px auto;
- line-height:50px;
- font-size:20px;
- border-radius:10px;
+.display{
+ width:240px;height:60px;
+ background:#0f172a;
+ border-radius:15px;
+ margin-bottom:15px;
+ display:flex;
+ align-items:center;
+ justify-content:flex-end;
+ padding:10px;
+ font-size:1.5rem;
+ box-shadow:0 0 20px rgba(255,255,255,0.1);
+}
+
+.buttons{
+ display:grid;
+ grid-template-columns:repeat(4,60px);
+ gap:10px;
 }
 
 button{
- padding:15px;
- margin:5px;
- font-size:18px;
+ height:60px;
  border:none;
- border-radius:10px;
+ border-radius:15px;
+ background:linear-gradient(145deg,#1e293b,#0f172a);
+ color:white;
+ font-size:1.2rem;
  cursor:pointer;
+ transition:0.2s;
 }
+button:active{transform:scale(0.9)}
 
-/* ---------------- STORY ---------------- */
-.hidden{ display:none; }
+.hidden{display:none}
 
+/* slides */
 .slide{
  display:none;
  height:100vh;
- justify-content:center;
  align-items:center;
- font-size:24px;
+ justify-content:center;
+ flex-direction:column;
+ text-align:center;
+ padding:20px;
+ position:relative;
 }
 
-.active{
- display:flex;
+.active{display:flex}
+
+.text{
+ font-size:2rem;
+ font-family:'Dancing Script';
+ animation:fadeUp 0.8s ease;
 }
 
-/* progress bar */
-#progress{
+@keyframes fadeUp{
+ from{opacity:0;transform:translateY(20px)}
+ to{opacity:1;transform:translateY(0)}
+}
+
+/* glow */
+.glow{
+ position:absolute;
+ width:250px;height:250px;
+ background:radial-gradient(circle,#ff4d6d,transparent);
+ filter:blur(100px);
+ animation:float 6s infinite alternate;
+}
+
+@keyframes float{
+ from{transform:translate(-40px,-40px)}
+ to{transform:translate(40px,40px)}
+}
+
+.progress{
  position:fixed;
  top:0;
  left:0;
- width:100%;
- height:5px;
- background:#333;
-}
-
-#bar{
- height:100%;
+ height:4px;
+ background:linear-gradient(to right,#ff4d6d,#f97316);
  width:0%;
- background:#00ffcc;
 }
 
-/* ---------------- CRATE ---------------- */
-.crate{
- width:120px;
- height:120px;
- background:brown;
- margin:auto;
+/* final */
+.final-section{
+ text-align:center;
  margin-top:20px;
- display:flex;
- justify-content:center;
- align-items:center;
- cursor:pointer;
- border-radius:10px;
 }
 
-/* ---------------- POPUP ---------------- */
+.crate{
+ font-size:80px;
+ cursor:pointer;
+ transition:0.3s;
+}
+.crate:hover{transform:scale(1.2) rotate(5deg)}
+
+.find-btn{
+ margin-top:10px;
+ padding:10px 20px;
+ border:none;
+ background:#ff4d6d;
+ border-radius:20px;
+ color:white;
+ cursor:pointer;
+}
+
+/* popup */
 .popup{
  position:fixed;
  top:0;
  left:0;
  width:100%;
  height:100%;
- background:rgba(0,0,0,0.7);
  display:none;
+ background:rgba(0,0,0,0.7);
  justify-content:center;
  align-items:center;
+ z-index:999;
 }
 
-.popup-box{
- background:#222;
+.popup-content{
+ background:white;
+ color:black;
  padding:20px;
  border-radius:15px;
  max-width:300px;
+ text-align:center;
+ animation:pop 0.3s ease;
+}
+
+@keyframes pop{
+ from{transform:scale(0)}
+ to{transform:scale(1)}
 }
 </style>
 </head>
 
 <body>
 
-<!-- ---------------- CALCULATOR ---------------- -->
-<div id="calc">
- <h2>Enter Password 🔐</h2>
- <div id="screen"></div>
-
- <div>
-  <button onclick="press('1')">1</button>
-  <button onclick="press('2')">2</button>
-  <button onclick="press('3')">3</button><br>
-
-  <button onclick="press('4')">4</button>
-  <button onclick="press('5')">5</button>
-  <button onclick="press('6')">6</button><br>
-
-  <button onclick="press('7')">7</button>
-  <button onclick="press('8')">8</button>
-  <button onclick="press('9')">9</button><br>
-
+<!-- CALCULATOR -->
+<div class="calc" id="calc">
+ <div class="display" id="screen"></div>
+ <div class="buttons">
+  <button onclick="press(1)">1</button>
+  <button onclick="press(2)">2</button>
+  <button onclick="press(3)">3</button>
   <button onclick="clearScr()">C</button>
-  <button onclick="press('0')">0</button>
-  <button onclick="check()">OK</button>
+  <button onclick="press(4)">4</button>
+  <button onclick="press(5)">5</button>
+  <button onclick="press(6)">6</button>
+  <button onclick="backspace()">⌫</button>
+  <button onclick="check()">=</button>
  </div>
 </div>
 
-<!-- ---------------- STORY ---------------- -->
+<!-- STORY -->
 <div id="story" class="hidden">
+<div class="progress" id="bar"></div>
 
- <div id="progress"><div id="bar"></div></div>
+<div class="slide active"><div class="glow"></div><div class="text">garima... ek sec rukiyega</div></div>
+<div class="slide"><div class="glow"></div><div class="text">skip mat kariyega please</div></div>
+<div class="slide"><div class="glow"></div><div class="text">aapko lagta hai na ki koi care nahi karta</div></div>
+<div class="slide"><div class="glow"></div><div class="text">kabhi kabhi aisa feel hota hai</div></div>
+<div class="slide"><div class="glow"></div><div class="text">but pura sach nahi hota</div></div>
+<div class="slide"><div class="glow"></div><div class="text">main karta hu care</div></div>
+<div class="slide"><div class="glow"></div><div class="text">aap important hain</div></div>
 
- <div class="slide active">hey… 👀</div>
- <div class="slide">i made something for you 💛</div>
- <div class="slide">tap to continue…</div>
+<!-- FINAL -->
+<div class="slide">
+ <div class="glow"></div>
+ <div class="text">at least ek banda to karta hi hai 🙂</div>
 
- <!-- SINGLE CRATE (FIXED DOUBLE ISSUE) -->
- <div class="slide">
-  <button onclick="findKey(event)">find key 🔑</button>
-  <div class="crate" onclick="openCrate(event)">🎁</div>
+ <div class="final-section">
+  <h2>wait… ek last cheez 👀</h2>
+  <p>there is a surprise for you</p>
+
+  <div class="crate" onclick="openCrate(event)">📦</div>
+  <button class="find-btn" onclick="findKey(event)">Find Key 🔑</button>
  </div>
-
- <div class="slide">hope you liked it :)</div>
+</div>
 
 </div>
 
-<!-- ---------------- POPUP ---------------- -->
+<!-- POPUP -->
 <div id="popup" class="popup">
- <div class="popup-box" id="popup-text"></div>
+  <div class="popup-content" id="popup-text"></div>
 </div>
 
 <script>
@@ -160,74 +217,81 @@ let input="";
 const password="143";
 let hasKey=false;
 
-// ---------------- CALCULATOR ----------------
+const screen=document.getElementById('screen');
+const calc=document.getElementById('calc');
+const story=document.getElementById('story');
+const popup=document.getElementById('popup');
+
+// calculator
 function press(num){
  input+=num;
- document.getElementById("screen").innerText=input;
+ screen.innerText=input;
 }
 
 function clearScr(){
  input="";
- document.getElementById("screen").innerText="";
+ screen.innerText="";
+}
+
+function backspace(){
+ input=input.slice(0,-1);
+ screen.innerText=input;
 }
 
 function check(){
  if(input===password){
-  document.getElementById("calc").style.display="none";
-  document.getElementById("story").classList.remove("hidden");
+  calc.style.display='none';
+  story.classList.remove('hidden');
  } else {
   alert("wrong password 😅");
   clearScr();
  }
 }
 
-// ---------------- SLIDES ----------------
+// slides
 let current=0;
-const slides=document.querySelectorAll(".slide");
-const bar=document.getElementById("bar");
-const story=document.getElementById("story");
+const slides=document.querySelectorAll('.slide');
+const bar=document.getElementById('bar');
 
-document.body.addEventListener("click",function(e){
+document.body.addEventListener("click", function(e){
 
- // prevent slide change when clicking buttons, crate or popup
- if(e.target.closest("button") || 
-    e.target.closest(".crate") || 
-    e.target.closest(".popup")) return;
+ if(e.target.closest(".crate") || 
+    e.target.closest(".find-btn") || 
+    e.target.closest(".popup") ||
+    e.target.closest(".buttons")) return;
 
- if(story.classList.contains("hidden")) return;
- if(current>=slides.length-1) return;
+ if(story.classList.contains('hidden')) return;
 
- slides[current].classList.remove("active");
+ if(current >= slides.length-1) return;
+
+ slides[current].classList.remove('active');
  current++;
- slides[current].classList.add("active");
+ slides[current].classList.add('active');
 
  bar.style.width=(current/(slides.length-1))*100+"%";
 });
 
-// ---------------- POPUP ----------------
+// popup
 function showPopup(msg){
- const popup=document.getElementById("popup");
- const text=document.getElementById("popup-text");
-
- text.innerHTML=msg;
  popup.style.display="flex";
-
- popup.onclick=()=>popup.style.display="none";
+ document.getElementById("popup-text").innerHTML=msg;
 }
 
-// ---------------- FIND KEY ----------------
+popup.onclick=()=>popup.style.display="none";
+
+// key
 function findKey(e){
  e.stopPropagation();
  hasKey=true;
 
  showPopup(`
- pehle ek choti si condition hai... 👀<br><br>
+ pehle ek choti si condition hai...<br><br>
  agar aap smile nahi kar rahe ho... toh ek baar smile kariyega 😊<br><br>
  <b>aapki smile hi iss crate ki key hai 💛</b>
  `);
 }
 
-// ---------------- OPEN CRATE ----------------
+// crate
 function openCrate(e){
  e.stopPropagation();
 
@@ -238,7 +302,7 @@ function openCrate(e){
   🎉 surpriseeee 🎉<br><br>
   ye aapke liye 🍰<br><br>
   virtual hai… but intention real hai :)<br><br>
-  aap important ho 💛
+  aap important hain 💛
   `);
 
   document.querySelector(".crate").style.display="none";
