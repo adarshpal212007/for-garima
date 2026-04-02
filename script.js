@@ -1,59 +1,52 @@
 <script>
 let hasKey = false;
 
+const popup = document.getElementById("popup");
+const text = document.getElementById("popup-text");
+
+/* FUNCTION TO SHOW MESSAGE (single control) */
+function showPopup(message){
+  text.innerHTML = message;
+  popup.style.display = "flex";
+}
+
 /* FIND KEY */
 function findKey(e) {
   if(e) e.stopPropagation();
 
-  const popup = document.getElementById("popup");
-  const text = document.getElementById("popup-text");
+  hasKey = true;
 
-  text.innerHTML = `
+  showPopup(`
   pehle ek choti si condition hai...<br><br>
   agar aap smile nahi kar rahe ho na... toh please ek baar smile kariyega 😊<br><br>
-  kyunki sach me...<br>
   <b>aapki smile hi iss crate ki key hai 💛</b><br><br>
-  pata nahi aap realise karte ho ya nahi...<br>
-  but jab aap smile karte ho na... sab thoda better lagta hai :)
-  `;
-
-  popup.style.display = "flex";
-  hasKey = true;
+  sach me... jab aap smile karte ho na... sab better lagta hai :)
+  `);
 }
 
 /* OPEN CRATE */
 function openCrate(e) {
   if(e) e.stopPropagation();
 
-  const popup = document.getElementById("popup");
-  const text = document.getElementById("popup-text");
-
   if (!hasKey) {
-    text.innerHTML = "arey… pehle key toh dhundhiye 🥺";
+    showPopup("arey… pehle key toh dhundhiye 🥺");
   } else {
-    text.innerHTML = `
+    showPopup(`
     🎉 surpriseeee 🎉<br><br>
     ye aapke liye 🍰<br><br>
     virtual hai… but intention real hai :)<br><br>
-    and haan…<br>
     aap important hain 💛
-    `;
-  }
+    `);
 
-  popup.style.display = "flex";
+    // hide crate after opening
+    document.querySelector(".crate").style.display = "none";
+  }
 }
 
-/* CLOSE POPUP WHEN CLICK OUTSIDE */
-document.getElementById("popup").addEventListener("click", function(e){
+/* CLOSE POPUP */
+popup.addEventListener("click", function(e){
   if(e.target.id === "popup"){
-    this.style.display = "none";
-  }
-});
-
-/* OPTIONAL: ESC KEY CLOSE */
-document.addEventListener("keydown", function(e){
-  if(e.key === "Escape"){
-    document.getElementById("popup").style.display = "none";
+    popup.style.display = "none";
   }
 });
 </script>
