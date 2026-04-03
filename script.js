@@ -1,27 +1,27 @@
 <script>
-let input = "";
-const password = "143";
-let hasKey = false;
+let input="";
+const password="143";
+let hasKey=false;
 
-// ---------------- CALCULATOR ----------------
+// calculator
 function press(num){
- input += num;
- document.getElementById("screen").innerText = input;
+ input+=num;
+ document.getElementById("screen").innerText=input;
 }
 
 function clearScr(){
- input = "";
- document.getElementById("screen").innerText = "";
+ input="";
+ document.getElementById("screen").innerText="";
 }
 
 function backspace(){
- input = input.slice(0, -1);
- document.getElementById("screen").innerText = input;
+ input=input.slice(0,-1);
+ document.getElementById("screen").innerText=input;
 }
 
 function check(){
- if(input === password){
-  document.getElementById("calc").style.display = 'none';
+ if(input===password){
+  document.getElementById("calc").style.display='none';
   document.getElementById("story").classList.remove('hidden');
  } else {
   alert("wrong password 😅");
@@ -29,23 +29,33 @@ function check(){
  }
 }
 
-// ---------------- SLIDES ----------------
-let current = 0;
+// slides
+let current=0;
+const slides=document.querySelectorAll('.slide');
+const bar=document.getElementById('bar');
+const story=document.getElementById("story");
 
-function updateSlides(){
- const slides = document.querySelectorAll('.slide');
- const bar = document.getElementById('bar');
+// 🔥 CLICK ONLY ON STORY (NOT WHOLE DOCUMENT)
+story.addEventListener("click", function(e){
 
- if(current >= slides.length) return;
+ // ❌ ignore clicks on interactive elements
+ if (
+   e.target.closest(".crate") ||
+   e.target.closest(".find-btn") ||
+   e.target.closest(".popup") ||
+   e.target.closest(".buttons")
+ ) {
+   return;
+ }
 
- slides.forEach(s => s.classList.remove('active'));
+ if(current >= slides.length-1) return;
+
+ slides[current].classList.remove('active');
+ current++;
  slides[current].classList.add('active');
 
- if(bar){
-  let progress = (current / (slides.length - 1)) * 100;
-  bar.style.width = progress + "%";
- }
-}
+ bar.style.width = (current/(slides.length-1))*100+"%";
+});
 
 // ---------------- GLOBAL CLICK (FIXED PROPERLY) ----------------
 document.addEventListener("click", function(e){
@@ -78,19 +88,27 @@ function showPopup(msg){
  const popup = document.getElementById("popup");
  const text = document.getElementById("popup-text");
 
- // 🔥 always reset (prevents double popup issue)
- text.innerHTML = "";
  text.innerHTML = msg;
-
  popup.style.display = "flex";
 }
 
-// close popup when clicking outside content
-document.getElementById("popup").addEventListener("click", function(e){
- if(!e.target.closest(".popup-content")){
-  this.style.display = "none";
- }
-});
+// close popup
+document.getElementById("popup").onclick = function(){
+ this.style.display = "none";
+};
+
+// key
+function findKey(e){
+ e.stopPropagation();
+
+ hasKey=true;
+
+ showPopup(`
+ pehle ek choti si condition hai...<br><br>
+ agar aap smile nahi kar rahe ho... toh ek baar smile kariyega 😊<br><br>
+ <b>aapki smile hi iss crate ki key hai 💛</b>
+ `);
+}
 
 // ---------------- FIND KEY ----------------
 function findKey(e){
@@ -119,14 +137,7 @@ function openCrate(e){
   aap important hain 💛
   `);
 
-  // hide crate after opening
-  const crate = document.querySelector(".crate");
-  if(crate) crate.style.display = "none";
+  document.querySelector(".crate").style.display="none";
  }
 }
-
-// ---------------- INIT FIX ----------------
-window.onload = function(){
- updateSlides();
-};
 </script>
