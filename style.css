@@ -2,7 +2,8 @@
 .final-section{
   text-align:center;
   margin-top:40px;
-  z-index:10;
+  position:relative;   /* 🔥 IMPORTANT */
+  z-index:20;          /* 🔥 bring above slides */
 }
 
 /* CRATE */
@@ -11,6 +12,8 @@
   cursor:pointer;
   margin:20px auto;
   transition:0.3s;
+  position:relative;
+  z-index:25;          /* 🔥 clickable always */
 }
 
 .crate:hover{
@@ -29,10 +32,21 @@
   margin-top:15px;
   box-shadow:0 5px 15px rgba(0,0,0,0.3);
   transition:0.2s;
+  position:relative;
+  z-index:25;          /* 🔥 clickable always */
 }
 
 .find-btn:active{
   transform:scale(0.95);
+}
+
+/* 🔥 VERY IMPORTANT FIX */
+.slide{
+  pointer-events:none;   /* block slide from stealing clicks */
+}
+
+.slide.active{
+  pointer-events:auto;   /* only active slide works */
 }
 
 /* POPUP */
@@ -49,6 +63,7 @@
   z-index:999;
 }
 
+/* 🔥 allow clicks ONLY inside popup */
 .popup-content{
   background:white;
   color:#111;
@@ -59,8 +74,10 @@
   font-family:Poppins;
   animation:pop 0.3s ease;
   box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  pointer-events:auto;
 }
 
+/* animation */
 @keyframes pop{
   from{transform:scale(0.8);opacity:0}
   to{transform:scale(1);opacity:1}
