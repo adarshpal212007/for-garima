@@ -37,21 +37,19 @@ const bar=document.getElementById('bar');
 // 🔥 FIXED CLICK HANDLING
 document.addEventListener("click", function(e){
 
- // 👉 allow button & crate clicks (VERY IMPORTANT FIX)
+ // ❌ STOP if clicking interactive elements
  if (
-   e.target.classList.contains("crate") ||
-   e.target.classList.contains("find-btn") ||
    e.target.closest(".crate") ||
    e.target.closest(".find-btn") ||
-   e.target.closest(".popup") ||
-   e.target.closest(".buttons")
+   e.target.closest(".buttons") ||
+   e.target.closest(".popup-content")
  ) {
    return;
  }
 
  const story = document.getElementById("story");
 
- if(story.classList.contains('hidden')) return;
+ if(!story || story.classList.contains('hidden')) return;
 
  if(current >= slides.length-1) return;
 
@@ -59,9 +57,8 @@ document.addEventListener("click", function(e){
  current++;
  slides[current].classList.add('active');
 
- bar.style.width=(current/(slides.length-1))*100+"%";
+ bar.style.width = (current/(slides.length-1))*100+"%";
 });
-
 // popup
 function showPopup(msg){
  const popup = document.getElementById("popup");
