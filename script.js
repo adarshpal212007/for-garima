@@ -37,17 +37,19 @@ const bar=document.getElementById('bar');
 // 🔥 FIXED CLICK HANDLING
 document.addEventListener("click", function(e){
 
- // ❌ STOP slide change when clicking interactive elements
- if(
+ // 👉 allow button & crate clicks (VERY IMPORTANT FIX)
+ if (
+   e.target.classList.contains("crate") ||
+   e.target.classList.contains("find-btn") ||
    e.target.closest(".crate") ||
    e.target.closest(".find-btn") ||
    e.target.closest(".popup") ||
-   e.target.closest(".buttons")   // 👈 IMPORTANT (calculator fix)
- ){
+   e.target.closest(".buttons")
+ ) {
    return;
  }
 
- const story=document.getElementById("story");
+ const story = document.getElementById("story");
 
  if(story.classList.contains('hidden')) return;
 
