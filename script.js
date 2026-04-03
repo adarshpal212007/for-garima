@@ -1,27 +1,27 @@
 <script>
-let input="";
-const password="143";
-let hasKey=false;
+let input = "";
+const password = "143";
+let hasKey = false;
 
-// calculator
+// ---------------- CALCULATOR ----------------
 function press(num){
- input+=num;
- document.getElementById("screen").innerText=input;
+ input += num;
+ document.getElementById("screen").innerText = input;
 }
 
 function clearScr(){
- input="";
- document.getElementById("screen").innerText="";
+ input = "";
+ document.getElementById("screen").innerText = "";
 }
 
 function backspace(){
- input=input.slice(0,-1);
- document.getElementById("screen").innerText=input;
+ input = input.slice(0, -1);
+ document.getElementById("screen").innerText = input;
 }
 
 function check(){
- if(input===password){
-  document.getElementById("calc").style.display='none';
+ if(input === password){
+  document.getElementById("calc").style.display = 'none';
   document.getElementById("story").classList.remove('hidden');
  } else {
   alert("wrong password 😅");
@@ -29,20 +29,34 @@ function check(){
  }
 }
 
-// slides
-let current=0;
-const slides=document.querySelectorAll('.slide');
-const bar=document.getElementById('bar');
+// ---------------- SLIDES ----------------
+let current = 0;
 
-// 🔥 FIXED CLICK HANDLING
+function updateSlides(){
+ const slides = document.querySelectorAll('.slide');
+ const bar = document.getElementById('bar');
+
+ if(current >= slides.length) return;
+
+ slides.forEach(s => s.classList.remove('active'));
+ slides[current].classList.add('active');
+
+ if(bar){
+  let progress = (current / (slides.length - 1)) * 100;
+  bar.style.width = progress + "%";
+ }
+}
+
+// ---------------- GLOBAL CLICK (FIXED PROPERLY) ----------------
 document.addEventListener("click", function(e){
 
- // ❌ STOP if clicking interactive elements
+ // 🚫 Ignore clicks on interactive elements
  if (
    e.target.closest(".crate") ||
    e.target.closest(".find-btn") ||
    e.target.closest(".buttons") ||
-   e.target.closest(".popup-content")
+   e.target.closest(".popup") ||
+   e.target.closest("#calc")
  ) {
    return;
  }
@@ -51,47 +65,47 @@ document.addEventListener("click", function(e){
 
  if(!story || story.classList.contains('hidden')) return;
 
- if(current >= slides.length-1) return;
+ const slides = document.querySelectorAll('.slide');
 
- slides[current].classList.remove('active');
+ if(current >= slides.length - 1) return;
+
  current++;
- slides[current].classList.add('active');
-
- bar.style.width = (current/(slides.length-1))*100+"%";
+ updateSlides();
 });
-// popup
+
+// ---------------- POPUP ----------------
 function showPopup(msg){
  const popup = document.getElementById("popup");
  const text = document.getElementById("popup-text");
 
- // clear previous message (IMPORTANT)
+ // 🔥 always reset (prevents double popup issue)
  text.innerHTML = "";
-
- // set new message
  text.innerHTML = msg;
 
  popup.style.display = "flex";
 }
 
-// close popup
-document.getElementById("popup").onclick = function(){
- this.style.display = "none";
-};
+// close popup when clicking outside content
+document.getElementById("popup").addEventListener("click", function(e){
+ if(!e.target.closest(".popup-content")){
+  this.style.display = "none";
+ }
+});
 
-// key
+// ---------------- FIND KEY ----------------
 function findKey(e){
  e.stopPropagation();
 
- hasKey=true;
+ hasKey = true;
 
  showPopup(`
- pehle ek choti si condition hai...<br><br>
+ pehle ek choti si condition hai... 👀<br><br>
  agar aap smile nahi kar rahe ho... toh ek baar smile kariyega 😊<br><br>
  <b>aapki smile hi iss crate ki key hai 💛</b>
  `);
 }
 
-// crate
+// ---------------- OPEN CRATE ----------------
 function openCrate(e){
  e.stopPropagation();
 
@@ -106,7 +120,13 @@ function openCrate(e){
   `);
 
   // hide crate after opening
-  document.querySelector(".crate").style.display="none";
+  const crate = document.querySelector(".crate");
+  if(crate) crate.style.display = "none";
  }
 }
+
+// ---------------- INIT FIX ----------------
+window.onload = function(){
+ updateSlides();
+};
 </script>
