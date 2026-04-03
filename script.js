@@ -77,8 +77,8 @@ function showPopup(msg){
 }
 
 // close popup
-document.getElementById("popup").onclick=function(){
- this.style.display="none";
+document.getElementById("popup").onclick = function(){
+ this.style.display = "none";
 };
 
 // key
