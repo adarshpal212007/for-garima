@@ -64,9 +64,16 @@ document.addEventListener("click", function(e){
 
 // popup
 function showPopup(msg){
- const popup=document.getElementById("popup");
- document.getElementById("popup-text").innerHTML=msg;
- popup.style.display="flex";
+ const popup = document.getElementById("popup");
+ const text = document.getElementById("popup-text");
+
+ // clear previous message (IMPORTANT)
+ text.innerHTML = "";
+
+ // set new message
+ text.innerHTML = msg;
+
+ popup.style.display = "flex";
 }
 
 // close popup
