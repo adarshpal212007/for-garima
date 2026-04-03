@@ -3,14 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Secret Surprise 💛</title>
+<title>for you</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Dancing+Script&display=swap" rel="stylesheet">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box}
+
 body{
- margin:0;
- font-family:Poppins, sans-serif;
- background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+ font-family:Poppins,sans-serif;
+ background:linear-gradient(135deg,#020617,#1e293b,#0f172a);
  overflow:hidden;
+ color:white;
+}
+
+/* floating hearts */
+body::before{
+ content:"";
+ position:absolute;
+ width:200%;
+ height:200%;
+ background:radial-gradient(circle,rgba(255,77,109,0.1) 1px,transparent 1px);
+ background-size:40px 40px;
+ animation:moveBg 20s linear infinite;
+}
+@keyframes moveBg{
+ from{transform:translateY(0)}
+ to{transform:translateY(-200px)}
 }
 
 /* CALCULATOR */
@@ -20,29 +39,45 @@ body{
  justify-content:center;
  align-items:center;
  flex-direction:column;
+ z-index:2;
+ position:relative;
 }
 
-.screen{
- width:200px;
- height:50px;
- background:#fff;
- border-radius:10px;
- margin-bottom:15px;
+#screen{
+ width:260px;
+ height:60px;
+ background:rgba(255,255,255,0.08);
+ backdrop-filter:blur(12px);
+ border-radius:15px;
+ margin-bottom:20px;
  display:flex;
  align-items:center;
  justify-content:flex-end;
  padding:10px;
- font-size:20px;
+ font-size:1.5rem;
+ box-shadow:0 5px 20px rgba(0,0,0,0.5);
+}
+
+.buttons{
+ display:grid;
+ grid-template-columns:repeat(3,70px);
+ gap:12px;
 }
 
 .buttons button{
- width:50px;
- height:50px;
- margin:5px;
+ height:60px;
  border:none;
- border-radius:10px;
- font-size:18px;
+ border-radius:12px;
+ background:rgba(255,255,255,0.08);
+ color:white;
+ font-size:1.2rem;
  cursor:pointer;
+ transition:0.2s;
+}
+
+.buttons button:hover{
+ background:#ff4d6d;
+ transform:scale(1.1);
 }
 
 /* STORY */
@@ -51,8 +86,6 @@ body{
  height:100vh;
  width:100%;
  position:relative;
- color:white;
- text-align:center;
 }
 
 .slide{
@@ -62,53 +95,69 @@ body{
  display:flex;
  justify-content:center;
  align-items:center;
- font-size:1.5rem;
+ text-align:center;
+ font-size:2rem;
+ font-family:'Dancing Script';
  opacity:0;
- transition:0.5s;
+ transform:translateY(40px);
+ transition:0.6s;
+ padding:20px;
 }
 
 .slide.active{
  opacity:1;
+ transform:translateY(0);
 }
 
-/* PROGRESS BAR */
-.bar{
+/* progress */
+#bar{
  position:absolute;
  top:0;
  left:0;
- height:5px;
- background:white;
+ height:4px;
+ background:#ff4d6d;
  width:0%;
- transition:0.3s;
+ box-shadow:0 0 10px #ff4d6d;
 }
 
-/* FINAL SECTION */
+/* FINAL */
 .final-section{
  position:absolute;
- bottom:30px;
+ bottom:40px;
  width:100%;
  text-align:center;
- z-index:1000;
 }
 
 .crate{
- font-size:70px;
+ font-size:80px;
  cursor:pointer;
- transition:0.3s;
+ animation:float 2s infinite ease-in-out;
 }
 
 .crate:hover{
  transform:scale(1.2) rotate(5deg);
 }
 
+@keyframes float{
+ 0%{transform:translateY(0)}
+ 50%{transform:translateY(-10px)}
+ 100%{transform:translateY(0)}
+}
+
 .find-btn{
  margin-top:15px;
- padding:10px 20px;
+ padding:12px 22px;
  border:none;
  background:#ff4d6d;
  color:white;
- border-radius:20px;
+ border-radius:25px;
  cursor:pointer;
+ font-size:1rem;
+ transition:0.2s;
+}
+
+.find-btn:hover{
+ transform:scale(1.1);
 }
 
 /* POPUP */
@@ -122,16 +171,22 @@ body{
  display:none;
  align-items:center;
  justify-content:center;
- z-index:2000;
+ z-index:999;
 }
 
 .popup-content{
  background:white;
- color:black;
+ color:#111;
  padding:25px;
  border-radius:20px;
  max-width:300px;
  text-align:center;
+ animation:pop 0.3s ease;
+}
+
+@keyframes pop{
+ from{transform:scale(0.8);opacity:0}
+ to{transform:scale(1);opacity:1}
 }
 </style>
 </head>
@@ -140,49 +195,55 @@ body{
 
 <!-- CALCULATOR -->
 <div id="calc">
-<div class="screen" id="screen"></div>
-
-<div class="buttons">
-<br>
-<button onclick="press('1')">1</button>
-<button onclick="press('2')">2</button>
-<button onclick="press('3')">3</button><br>
-
-<button onclick="press('4')">4</button>
-<button onclick="press('5')">5</button>
-<button onclick="press('6')">6</button><br>
-
-<button onclick="press('7')">7</button>
-<button onclick="press('8')">8</button>
-<button onclick="press('9')">9</button><br>
-
-<button onclick="clearScr()">C</button>
-<button onclick="press('0')">0</button>
-<button onclick="backspace()">⌫</button><br>
-
-<button onclick="check()">OK</button>
-</div>
+ <div id="screen"></div>
+ <div class="buttons">
+  <button onclick="press('1')">1</button>
+  <button onclick="press('4')">4</button>
+  <button onclick="press('7')">7</button>
+  <button onclick="press('2')">2</button>
+  <button onclick="press('5')">5</button>
+  <button onclick="press('8')">8</button>
+  <button onclick="press('3')">3</button>
+  <button onclick="press('6')">6</button>
+  <button onclick="press('9')">9</button>
+  <button onclick="clearScr()">C</button>
+  <button onclick="press('0')">0</button>
+  <button onclick="check()">=</button>
+ </div>
 </div>
 
 <!-- STORY -->
 <div id="story">
-<div class="bar" id="bar"></div>
+<div id="bar"></div>
 
-<div class="slide active">Hey… ek choti si story hai 👀</div>
-<div class="slide">thodi si ajeeb… thodi si cute 😊</div>
-<div class="slide">bas aapke liye 💛</div>
+<div class="slide active">ek sec rukiyega…</div>
+<div class="slide">skip mat kariyega please</div>
+<div class="slide">aapko lagta hai koi care nahi karta</div>
+<div class="slide">kabhi kabhi aisa feel hota hai</div>
+<div class="slide">but pura sach nahi hota</div>
+<div class="slide">main karta hu care 🙂</div>
+<div class="slide">aap thoda overthink karte ho</div>
+<div class="slide">aur phir sad ho jaate ho</div>
+<div class="slide">aap important ho</div>
+<div class="slide">thode annoying bhi ho 😅</div>
 
-<!-- FINAL -->
-<div class="final-section">
-<div class="crate" onclick="openCrate(event)">🎁</div>
-<br>
-<button class="find-btn" onclick="findKey(event)">Find Key 🔑</button>
+<div class="slide">
+ <div>
+  at least ek banda to karta hi hai 🙂<br><br>
+  wait… ek last cheez 👀
+
+  <div class="final-section">
+   <div class="crate" onclick="openCrate(event)">📦</div>
+   <button class="find-btn" onclick="findKey(event)">Find Key 🔑</button>
+  </div>
+ </div>
 </div>
+
 </div>
 
 <!-- POPUP -->
-<div class="popup" id="popup">
-<div class="popup-content" id="popup-text"></div>
+<div id="popup" class="popup">
+ <div class="popup-content" id="popup-text"></div>
 </div>
 
 <script>
@@ -191,26 +252,19 @@ const password="143";
 let hasKey=false;
 
 // calculator
-function press(num){
- input+=num;
+function press(n){
+ input+=n;
  document.getElementById("screen").innerText=input;
 }
-
 function clearScr(){
  input="";
  document.getElementById("screen").innerText="";
 }
-
-function backspace(){
- input=input.slice(0,-1);
- document.getElementById("screen").innerText=input;
-}
-
 function check(){
  if(input===password){
   document.getElementById("calc").style.display="none";
   document.getElementById("story").style.display="block";
- } else {
+ }else{
   alert("wrong password 😅");
   clearScr();
  }
@@ -221,12 +275,18 @@ let current=0;
 const slides=document.querySelectorAll(".slide");
 const bar=document.getElementById("bar");
 
-document.getElementById("story").addEventListener("click",function(e){
+document.addEventListener("click",function(e){
 
- // ignore clicks on crate or button
- if(e.target.closest(".crate") || e.target.closest(".find-btn")) return;
+ if(
+  e.target.closest(".crate") ||
+  e.target.closest(".find-btn") ||
+  e.target.closest(".popup") ||
+  e.target.closest("#calc")
+ ) return;
 
- if(current >= slides.length-1) return;
+ if(document.getElementById("story").style.display==="none") return;
+
+ if(current>=slides.length-1) return;
 
  slides[current].classList.remove("active");
  current++;
@@ -238,13 +298,9 @@ document.getElementById("story").addEventListener("click",function(e){
 // popup
 function showPopup(msg){
  const popup=document.getElementById("popup");
- const text=document.getElementById("popup-text");
-
- text.innerHTML=msg;
+ document.getElementById("popup-text").innerHTML=msg;
  popup.style.display="flex";
 }
-
-// close popup
 document.getElementById("popup").onclick=function(){
  this.style.display="none";
 };
@@ -252,7 +308,6 @@ document.getElementById("popup").onclick=function(){
 // key
 function findKey(e){
  e.stopPropagation();
-
  hasKey=true;
 
  showPopup(`
@@ -268,13 +323,13 @@ function openCrate(e){
 
  if(!hasKey){
   showPopup("arey… pehle key toh dhundhiye 🥺");
- } else {
+ }else{
   showPopup(`
-  🎉 surpriseeee 🎉<br><br>
-  ye aapke liye 🍰<br><br>
-  virtual hai… but intention real hai :)<br><br>
-  aap important ho 💛
-  `);
+ 🎉 surpriseeee 🎉<br><br>
+ ye aapke liye 🍰<br><br>
+ virtual hai… but intention real hai :)<br><br>
+ aap important ho 💛
+ `);
 
   document.querySelector(".crate").style.display="none";
  }
